@@ -11,7 +11,7 @@
         <div class="info">
             <div class="head">Email</div>
             <div class="sub-title">
-                <a href="#" id="emailLink">info@aktivgeneration.org</a>
+                <a href="#" id="emailLink">avavrupa180@gmail.com</a>
                 <div id="emailOptions" style="display: none;">
                     <a href="#" id="copyEmail">Copy email address</a>
                     <a href="#" id="autoEmail">Send email automatically</a>
@@ -23,6 +23,8 @@
     <div id="copyNotification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #2c3e50; color: white; padding: 10px 20px; border-radius: 4px;">Email address copied to clipboard!</div>
 
     <script>
+        let serviceOpened = false;
+
         document.getElementById('emailLink').addEventListener('click', function(e) {
             e.preventDefault();
             const options = document.getElementById('emailOptions');
@@ -44,30 +46,51 @@
 
         document.getElementById('autoEmail').addEventListener('click', function(e) {
             e.preventDefault();
-            const email = 'info@aktivgeneration.org';
+            serviceOpened = false;
+            const email = 'avavrupa180@gmail.com';
             
             // Try default mail client first
             const mailtoLink = `mailto:${email}`;
             window.location.href = mailtoLink;
             
-            // If default client doesn't work, try webmail clients
+            // Check if default client opened after a short delay
             setTimeout(function() {
-                // Try Gmail
-                const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`;
-                window.open(gmailLink, '_blank');
-                
-                // If Gmail doesn't work, try Outlook
-                setTimeout(function() {
-                    const outlookLink = `https://outlook.live.com/mail/0/deeplink/compose?to=${email}`;
-                    window.open(outlookLink, '_blank');
+                if (!serviceOpened) {
+                    // Try Gmail
+                    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`;
+                    const gmailWindow = window.open(gmailLink, '_blank');
                     
-                    // If Outlook doesn't work, try iCloud Mail
+                    // Check if Gmail opened successfully
+                    if (gmailWindow && !gmailWindow.closed) {
+                        serviceOpened = true;
+                        return;
+                    }
+                }
+                
+                // Check again after another delay
+                setTimeout(function() {
+                    if (!serviceOpened) {
+                        // Try Outlook
+                        const outlookLink = `https://outlook.live.com/mail/0/deeplink/compose?to=${email}`;
+                        const outlookWindow = window.open(outlookLink, '_blank');
+                        
+                        // Check if Outlook opened successfully
+                        if (outlookWindow && !outlookWindow.closed) {
+                            serviceOpened = true;
+                            return;
+                        }
+                    }
+                    
+                    // Final check
                     setTimeout(function() {
-                        const icloudLink = `https://www.icloud.com/mail/compose?to=${email}`;
-                        window.open(icloudLink, '_blank');
-                    }, 1000);
-                }, 1000);
-            }, 1000);
+                        if (!serviceOpened) {
+                            // Try iCloud Mail as last resort
+                            const icloudLink = `https://www.icloud.com/mail/compose?to=${email}`;
+                            window.open(icloudLink, '_blank');
+                        }
+                    }, 500);
+                }, 500);
+            }, 500);
             
             document.getElementById('emailOptions').style.display = 'none';
         });
