@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .contact-info {
+            margin-bottom: 30px;
+        }
+        
+        .contact-info h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        .row:hover {
+            background: #f0f7ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .row i {
+            font-size: 24px;
+            color: #3498db;
+            width: 50px;
+            text-align: center;
+            margin-right: 15px;
+        }
+        
+        .info .head {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .info .sub-title {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        
+        .email-link {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+            position: relative;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .email-link:hover {
+            color: #2980b9;
+            background-color: #f0f7ff;
+        }
+        
+        .email-options {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            width: 200px;
+            margin-top: 5px;
+        }
+        
+        .email-options a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .email-options a:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .email-options a:last-child {
+            border-bottom: none;
+        }
+        
+        .explanation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .explanation h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .explanation p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .note {
+            background: #fff8e1;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 14px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        @media (max-width: 600px) {
+            .row {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .row i {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Contact Information</h1>
+            <p>Get in touch with us through various channels</p>
+        </header>
+        
+        <div class="content">
+            <div class="contact-info">
+                <h2>Contact Details</h2>
+                
+                <div class="row">
+                    <i class="fas fa-envelope"></i>
+                    <div class="info">
+                        <div class="head">Email</div>
+                        <div class="sub-title">
+                            <a href="mailto:info@aktivgeneration.org" class="email-link" id="emailLink">info@aktivgeneration.org</a>
+                            <div class="email-options" id="emailOptions">
+                                <a href="#" id="copyEmail">Copy email address</a>
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@aktivgeneration.org" target="_blank">Open in Gmail</a>
+                                <a href="https://outlook.live.com/mail/0/deeplink/compose?to=info@aktivgeneration.org" target="_blank">Open in Outlook</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <i class="fas fa-phone"></i>
+                    <div class="info">
+                        <div class="head">Phone</div>
+                        <div class="sub-title">+1 (555) 123-4567</div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="info">
+                        <div class="head">Address</div>
+                        <div class="sub-title">123 Main Street, City, Country</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="explanation">
+                <h3>How the Email Link Works</h3>
+                <p>When you click the email address, it will attempt to open your default email client with the recipient field pre-filled to "info@aktivgeneration.org".</p>
+                <p>If nothing happens, try these alternatives:</p>
+                <ul>
+                    <li>Right-click the email address and select "Copy email address"</li>
+                    <li>Use the dropdown options for specific email services</li>
+                    <li>Configure a default email client in your browser settings</li>
+                </ul>
+                
+                <div class="note">
+                    <strong>Note:</strong> The behavior depends on your browser and email client settings. Some web-based email services might open in a new tab with a pre-filled compose window.
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 Aktiv Generation. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <div class="copy-notification" id="copyNotification">Email address copied to clipboard!</div>
+
+    <script>
+        document.getElementById('emailLink').addEventListener('click', function(e) {
+            // Show options if the default mailto link doesn't work
+            e.preventDefault();
+            const options = document.getElementById('emailOptions');
+            options.style.display = options.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        document.getElementById('copyEmail').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = 'info@aktivgeneration.org';
+            navigator.clipboard.writeText(email).then(function() {
+                const notification = document.getElementById('copyNotification');
+                notification.style.display = 'block';
+                setTimeout(function() {
+                    notification.style.display = 'none';
+                }, 2000);
+            });
+        });
+        
+        // Close options when clicking elsewhere
+        document.addEventListener('click', function(e) {
+            if (!e.target.matches('.email-link') && !e.target.matches('.email-options a')) {
+                document.getElementById('emailOptions').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
